@@ -7,17 +7,15 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-
+import com.revrobotics.PersistMode;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
-import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
-import frc.robot.Constants;
 import frc.robot.Constants.ShooterConstants;
 
 public class shooter extends SubsystemBase {
@@ -34,6 +32,8 @@ public class shooter extends SubsystemBase {
 
     shooterEncoder = shooterL.getEncoder(); // encoder of main motor
     closedLoopControllerS = shooterL.getClosedLoopController(); // closed loop controller of main motor
+
+    configure();
   }
 
   private void configure() {
@@ -56,6 +56,15 @@ public class shooter extends SubsystemBase {
       .reverseSoftLimit(ShooterConstants.kReverseSoftLimit);
     shooterLConfig.encoder
       .positionConversionFactor(ShooterConstants.kPositionCoversionFactor);
+    
+    shooterRConfig
+      .inverted(ShooterConstants.kRInverted)
+      .smartCurrentLimit(ShooterConstants.kStallLimit, ShooterConstants.kFreeLimit)
+      .idleMode(ShooterConstants.kIdleMode)
+      .follow(shooterL);
+
+      shooterL.configure(shooterLConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+      shooterR.configure(shooterRConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
   @Override
