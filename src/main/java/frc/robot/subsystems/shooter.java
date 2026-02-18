@@ -37,6 +37,8 @@ public class shooter extends SubsystemBase {
   }
 
   private void configure() {
+
+
     shooterLConfig = new SparkMaxConfig();
     shooterRConfig =new SparkMaxConfig();
     shooterLConfig
@@ -65,6 +67,14 @@ public class shooter extends SubsystemBase {
 
       shooterL.configure(shooterLConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
       shooterR.configure(shooterRConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+  }
+
+  public void spin(double rpm){
+    closedLoopControllerS.setSetpoint(rpm, ControlType.kVelocity);
+  }
+
+  private double getVelocity(){
+    return shooterEncoder.getVelocity();
   }
 
   @Override

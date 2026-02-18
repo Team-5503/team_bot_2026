@@ -75,6 +75,37 @@ public final class Constants {
         // tolerance to compare the shooter speed error with
         public static final double kTolerance = 40; // TODO: change if needed
     }
+    // for the intake's pivot
+    public static class PivotConstants {
+        // ids
+        public static final int kCanID = 15;
+        
+        // config
+        public static final boolean kInverted = true;
+        public static final int kStallLimit = 70;
+        public static final int kFreeLimit = 50;
+        public static final IdleMode kIdleMode = IdleMode.kBrake; // TODO: change to brake
+
+        public static final double kOffset = 0;
+        public static final boolean kAbsoluteEncoderInverted = false;
+
+        // closed loop
+        public static final FeedbackSensor kSensor = FeedbackSensor.kAbsoluteEncoder;
+        public static final double kP = .008;
+        public static final double kI = 0;
+        public static final double kD = .004;
+        public static final double kFf = 0;
+        public static final double kMinOutputLimit = -.16;
+        public static final double kMaxOutputLimit = .18;
+
+        // soft limit
+        public static final double kForwardSoftLimit = 130;
+        public static final double kReverseSoftLimit = -60;
+
+        // encoder 
+        public static final double kPositionCoversionFactor = 360;
+        public static final double kTolerance = 5;
+    }
     // for the bot's intake subsystem
     public static class IntakeConstants {
          // can id TODO: change to be accurate
