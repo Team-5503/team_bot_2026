@@ -17,23 +17,153 @@ import com.revrobotics.spark.FeedbackSensor;
 public final class Constants {
     // for our camera system
     public static class VisionConstants {
+         // can id TODO: change to be accurate
+        public static final int kCanID = 0;
 
+        // config TODO: change to accurate
+        public static final boolean kInverted = false;
+        
+        public static final int kStallLimit = 80;
+        public static final int kFreeLimit = 40;
+        public static final IdleMode kIdleMode = IdleMode.kCoast;
+
+        // pid constants TODO: change to be hopefully accurate and pray it works
+        public static final FeedbackSensor kSensor = FeedbackSensor.kPrimaryEncoder;
+        public static final double kP = .001;
+        public static final double kI = 0;
+        public static final double kD = 0;
+        public static final double kMinOutputLimit = -.8;
+        public static final double kMaxOutputLimit = .8;
+
+        // soft limits (will be unused for shooter)
+        public static final double kForwardSoftLimit = 63;
+        public static final double kReverseSoftLimit = -1;
+
+        // encoder constants TODO: change to be accurate
+        public static final double kPositionCoversionFactor = 1;
+
+        // tolerance to compare the shooter speed error with
+        public static final double kTolerance = 40; // TODO: change if needed
     }
     // for the bot's auto actions
     public static class AutoConstants {
+         // can id TODO: change to be accurate
+        public static final int kCanID = 0;
 
+        // config TODO: change to accurate
+        public static final boolean kInverted = false;
+        
+        public static final int kStallLimit = 80;
+        public static final int kFreeLimit = 40;
+        public static final IdleMode kIdleMode = IdleMode.kCoast;
+
+        // pid constants TODO: change to be hopefully accurate and pray it works
+        public static final FeedbackSensor kSensor = FeedbackSensor.kPrimaryEncoder;
+        public static final double kP = .001;
+        public static final double kI = 0;
+        public static final double kD = 0;
+        public static final double kMinOutputLimit = -.8;
+        public static final double kMaxOutputLimit = .8;
+
+        // soft limits (will be unused for shooter)
+        public static final double kForwardSoftLimit = 63;
+        public static final double kReverseSoftLimit = -1;
+
+        // encoder constants TODO: change to be accurate
+        public static final double kPositionCoversionFactor = 1;
+
+        // tolerance to compare the shooter speed error with
+        public static final double kTolerance = 40; // TODO: change if needed
     }
     // for the bot's intake subsystem
     public static class IntakeConstants {
+         // can id TODO: change to be accurate
+        public static final int kCanID = 0;
 
+        // config TODO: change to accurate
+        public static final boolean kInverted = false;
+        
+        public static final int kStallLimit = 80;
+        public static final int kFreeLimit = 40;
+        public static final IdleMode kIdleMode = IdleMode.kCoast;
+
+        // pid constants TODO: change to be hopefully accurate and pray it works
+        public static final FeedbackSensor kSensor = FeedbackSensor.kPrimaryEncoder;
+        public static final double kP = .001;
+        public static final double kI = 0;
+        public static final double kD = 0;
+        public static final double kMinOutputLimit = -.8;
+        public static final double kMaxOutputLimit = .8;
+
+        // soft limits (will be unused for shooter)
+        public static final double kForwardSoftLimit = 63;
+        public static final double kReverseSoftLimit = -1;
+
+        // encoder constants TODO: change to be accurate
+        public static final double kPositionCoversionFactor = 1;
+
+        // tolerance to compare the shooter speed error with
+        public static final double kTolerance = 40; // TODO: change if needed
     }
     // For the bot's indexer subsystem
     public static class IndexConstants {
+         // can id TODO: change to be accurate
+        public static final int kCanID = 0;
 
+        // config TODO: change to accurate
+        public static final boolean kInverted = false;
+        
+        public static final int kStallLimit = 80;
+        public static final int kFreeLimit = 40;
+        public static final IdleMode kIdleMode = IdleMode.kCoast;
+
+        // pid constants TODO: change to be hopefully accurate and pray it works
+        public static final FeedbackSensor kSensor = FeedbackSensor.kPrimaryEncoder;
+        public static final double kP = .001;
+        public static final double kI = 0;
+        public static final double kD = 0;
+        public static final double kMinOutputLimit = -.8;
+        public static final double kMaxOutputLimit = .8;
+
+        // soft limits (will be unused for shooter)
+        public static final double kForwardSoftLimit = 63;
+        public static final double kReverseSoftLimit = -1;
+
+        // encoder constants TODO: change to be accurate
+        public static final double kPositionCoversionFactor = 1;
+
+        // tolerance to compare the shooter speed error with
+        public static final double kTolerance = 40; // TODO: change if needed
     }
     // for the feeder into the shooter
     public static class FeederConstants {
+         // can id TODO: change to be accurate
+        public static final int kCanID = 0;
 
+        // config TODO: change to accurate
+        public static final boolean kInverted = false;
+        
+        public static final int kStallLimit = 80;
+        public static final int kFreeLimit = 40;
+        public static final IdleMode kIdleMode = IdleMode.kCoast;
+
+        // pid constants TODO: change to be hopefully accurate and pray it works
+        public static final FeedbackSensor kSensor = FeedbackSensor.kPrimaryEncoder;
+        public static final double kP = .001;
+        public static final double kI = 0;
+        public static final double kD = 0;
+        public static final double kMinOutputLimit = -.8;
+        public static final double kMaxOutputLimit = .8;
+
+        // soft limits (will be unused for shooter)
+        public static final double kForwardSoftLimit = 63;
+        public static final double kReverseSoftLimit = -1;
+
+        // encoder constants TODO: change to be accurate
+        public static final double kPositionCoversionFactor = 1;
+
+        // tolerance to compare the shooter speed error with
+        public static final double kTolerance = 40; // TODO: change if needed
     }
     // For the shooter subsystem
     public static class ShooterConstants {
@@ -62,6 +192,7 @@ public final class Constants {
 
         // encoder constants TODO: change to be accurate
         public static final double kPositionCoversionFactor = 1;
+
         // tolerance to compare the shooter speed error with
         public static final double kTolerance = 40; // TODO: change if needed
 
