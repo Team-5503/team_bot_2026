@@ -22,16 +22,17 @@ public class shooter extends SubsystemBase {
   /** Creates a new shooter. */
   SparkMax shooterL, shooterR;
 
-  private SparkClosedLoopController closedLoopControllerS;
+  private SparkClosedLoopController closedLoopControllerL, closedLoopControllerR;
   private RelativeEncoder shooterEncoder;
   private SparkMaxConfig shooterLConfig;
   private SparkMaxConfig shooterRConfig;
   public shooter() {
-    shooterL = new SparkMax(0, MotorType.kBrushless); // main motor
-    shooterR = new SparkMax(0, MotorType.kBrushless); // will follow in reverse
+    shooterL = new SparkMax(ShooterConstants.kLCanID, MotorType.kBrushless); // main motor
+    shooterR = new SparkMax(ShooterConstants.kRCanRID, MotorType.kBrushless); // will follow in reverse
 
     shooterEncoder = shooterL.getEncoder(); // encoder of main motor
-    closedLoopControllerS = shooterL.getClosedLoopController(); // closed loop controller of main motor
+    closedLoopControllerL = shooterL.getClosedLoopController(); // closed loop controller of left motor
+    closedLoopControllerR = shooterR.getClosedLoopController(); // closed loop controller of left motor
 
     configure();
   }
@@ -60,22 +61,63 @@ public class shooter extends SubsystemBase {
       .positionConversionFactor(ShooterConstants.kPositionCoversionFactor);
     
     shooterRConfig
-      .inverted(ShooterConstants.kRInverted)
-      .smartCurrentLimit(ShooterConstants.kStallLimit, ShooterConstants.kFreeLimit)
-      .idleMode(ShooterConstants.kIdleMode)
-      .follow(shooterL);
+      .apply(shooterLConfig)
+      .inverted(ShooterConstants.kRInverted);
 
       shooterL.configure(shooterLConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-      shooterR.configure(shooterRConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+      // shooterR.configure(shooterRConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
   public void spin(double rpm){
-    closedLoopControllerS.setSetpoint(rpm, ControlType.kVelocity);
+    closedLoopControllerL.setSetpoint(rpm, ControlType.kVelocity);
+    closedLoopControllerR.setSetpoint(rpm, ControlType.kVelocity);
+  }
+
+  public void stop(){
+    shooterL.stopMotor();
+    shooterR.stopMotor();
   }
 
   private double getVelocity(){
     return shooterEncoder.getVelocity();
   }
+
+  private double getError() {
+    return Math.abs(Math.abs(getVelocity()) - Math.abs(closedLoopControllerL.getSetpoint()));
+  }
+
+  private boolean isAtSetpoint(){
+    return (getError() < ShooterConstants.kTolerance);
+  }
+
+
+
+ /*
+   * COMMANDS THAT DO NOT SET ANYthing
+   * TODO: SEE IF WE NEED TO MOVE THIS TO ITS OWN COMMAND FILE
+   */
+
+  public Command waitUntilAtSetpoint() {
+    return new WaitUntilCommand(() -> {
+      // TEST FOR IF PIVOTERROR IS IN TOLERANCE OF TARGETPOSITION
+      return isAtSetpoint();
+    });
+  }
+  /*
+   * COMMANDS TO SET POSITIONS ( because we can't call commands that call for the same subsystem,
+   * but you can call two commands that are in the same subsystem)
+   */
+
+   public Command setRPM(double rpm){
+    return runOnce(() -> {
+      spin(rpm);
+    });
+   }
+   public Command stopMotors(){
+    return runOnce(()-> {
+      stop();
+    });
+   }
 
   @Override
   public void periodic() {

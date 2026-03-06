@@ -34,7 +34,7 @@ public class Intake extends SubsystemBase {
   /** Creates a new Intake. */
   public Intake() {
     intake = new SparkMax(IntakeConstants.kCanID, MotorType.kBrushless); // will grip the balls
-    pivot = new SparkMax(0, MotorType.kBrushless);
+    pivot = new SparkMax(PivotConstants.kCanID, MotorType.kBrushless);
 
     intakeEncoder = intake.getEncoder(); // encoder of main motor
 
@@ -77,7 +77,7 @@ public class Intake extends SubsystemBase {
       .idleMode(PivotConstants.kIdleMode); 
     pivotConfig.closedLoop
       .feedbackSensor(PivotConstants.kSensor) 
-      .positionWrappingEnabled(true)
+      .positionWrappingEnabled(false)
       .positionWrappingInputRange(0, 360)
       .p(PivotConstants.kP)
       .i(PivotConstants.kI)
@@ -101,17 +101,90 @@ public class Intake extends SubsystemBase {
       
   }
   // functions to give targets to the motors
-  public void spin(double rpm){
-    closedLoopControllerI.setSetpoint(rpm, ControlType.kVelocity);
-  }
 
   public void setPosition(double pos){
     closedLoopControllerP.setSetpoint(pos, ControlType.kPosition);
   }
   // functions to return info on the encoders for future use
+
+  
+
+  public void spin(double rpm){
+    closedLoopControllerI.setSetpoint(rpm, ControlType.kVelocity);
+  }
+
+  public void stop(){
+    intake.stopMotor();
+    pivot.stopMotor();
+  }
+
   private double getVelocity(){
     return intakeEncoder.getVelocity();
   }
+
+  private double getPos(){
+    return absolutePivotEncoder.getPosition();
+  }
+
+  private double getError() {
+    return Math.abs(Math.abs(getVelocity()) - Math.abs(closedLoopControllerI.getSetpoint()));
+  }
+
+  private double getPosError() {
+    return Math.abs(Math.abs(getPos()) - Math.abs(closedLoopControllerP.getSetpoint()));
+  }
+
+  private boolean isAtRPM(){
+    return (getError() < IntakeConstants.kTolerance);
+  }
+
+  private boolean isAtPos(){
+    return (getPosError() < PivotConstants.kTolerance);
+  }
+
+
+
+
+ /*
+   * COMMANDS THAT DO NOT SET ANYthing
+   * TODO: SEE IF WE NEED TO MOVE THIS TO ITS OWN COMMAND FILE
+   */
+
+  public Command waitUntilAtVelocity() {
+    return new WaitUntilCommand(() -> {
+      // TEST FOR IF PIVOTERROR IS IN TOLERANCE OF TARGETPOSITION
+      return isAtRPM();
+    });
+  }
+
+  public Command waitUntilAtPos() {
+    return new WaitUntilCommand(() -> {
+      // TEST FOR IF PIVOTERROR IS IN TOLERANCE OF TARGETPOSITION
+      return isAtPos();
+    });
+  }
+  /*
+   * COMMANDS TO SET POSITIONS ( because we can't call commands that call for the same subsystem,
+   * but you can call two commands that are in the same subsystem)
+   */
+
+   public Command setRPM(double rpm){
+    return runOnce(() -> {
+      spin(rpm);
+    });
+   }
+
+   public Command setPos(double pos){
+    return runOnce(() -> {
+      setPosition(pos);
+    });
+   }
+
+   public Command stopMotors(){
+    return runOnce(()-> {
+      stop();
+    });
+   }
 
   @Override
   public void periodic() {

@@ -16,7 +16,9 @@ import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
-import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.IndexConstants;
+
+// TODO: set up the configuration to adjust for the fact that the motor is a neo 550 (thanks Mr. Weltch)
 
 public class Index extends SubsystemBase {
 
@@ -29,7 +31,7 @@ public class Index extends SubsystemBase {
 
   /** Creates a new Index. */
   public Index() {
-     index = new SparkMax(0, MotorType.kBrushless); // will grip to balls
+     index = new SparkMax(IndexConstants.kCanID, MotorType.kBrushless); // will grip to balls
 
     indexEncoder = index.getEncoder(); // encoder of main motor
     closedLoopControllerI = index.getClosedLoopController(); // closed loop controller of main motor
@@ -41,35 +43,76 @@ public class Index extends SubsystemBase {
  private void configure() {
     indexConfig = new SparkMaxConfig();
     indexConfig
-      .inverted(ShooterConstants.kLInverted)
-      .smartCurrentLimit(ShooterConstants.kStallLimit, ShooterConstants.kFreeLimit)
-      .idleMode(ShooterConstants.kIdleMode); 
+      .inverted(IndexConstants.kInverted)
+      .smartCurrentLimit(IndexConstants.kStallLimit, IndexConstants.kFreeLimit)
+      .idleMode(IndexConstants.kIdleMode); 
     indexConfig.closedLoop
-      .feedbackSensor(ShooterConstants.kSensor) 
-      .p(ShooterConstants.kP)
-      .i(ShooterConstants.kI)
-      .d(ShooterConstants.kD)
-      .outputRange(ShooterConstants.kMinOutputLimit,ShooterConstants.kMaxOutputLimit);
+      .feedbackSensor(IndexConstants.kSensor) 
+      .p(IndexConstants.kP)
+      .i(IndexConstants.kI)
+      .d(IndexConstants.kD)
+      .outputRange(IndexConstants.kMinOutputLimit,IndexConstants.kMaxOutputLimit);
     indexConfig.softLimit
       .forwardSoftLimitEnabled(false)
-      .forwardSoftLimit(ShooterConstants.kForwardSoftLimit) 
+      .forwardSoftLimit(IndexConstants.kForwardSoftLimit) 
       .reverseSoftLimitEnabled(false)
-      .reverseSoftLimit(ShooterConstants.kReverseSoftLimit);
+      .reverseSoftLimit(IndexConstants.kReverseSoftLimit);
     indexConfig.encoder
-      .positionConversionFactor(ShooterConstants.kPositionCoversionFactor);
+      .positionConversionFactor(IndexConstants.kPositionCoversionFactor);
     
     
       index.configure(indexConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
       
   }
 
-public void spin(double rpm){
+  public void spin(double rpm){
     closedLoopControllerI.setSetpoint(rpm, ControlType.kVelocity);
   }
 
-private double getVelocity(){
+  public void stop(){
+    index.stopMotor();
+  }
+
+  private double getVelocity(){
     return indexEncoder.getVelocity();
   }
+
+  private double getError() {
+    return Math.abs(Math.abs(getVelocity()) - Math.abs(closedLoopControllerI.getSetpoint()));
+  }
+
+  private boolean isAtSetpoint(){
+    return (getError() < IndexConstants.kTolerance);
+  }
+
+
+
+ /*
+   * COMMANDS THAT DO NOT SET ANYthing
+   * TODO: SEE IF WE NEED TO MOVE THIS TO ITS OWN COMMAND FILE
+   */
+
+  public Command waitUntilAtSetpoint() {
+    return new WaitUntilCommand(() -> {
+      // TEST FOR IF PIVOTERROR IS IN TOLERANCE OF TARGETPOSITION
+      return isAtSetpoint();
+    });
+  }
+  /*
+   * COMMANDS TO SET POSITIONS ( because we can't call commands that call for the same subsystem,
+   * but you can call two commands that are in the same subsystem)
+   */
+
+   public Command setRPM(double rpm){
+    return runOnce(() -> {
+      spin(rpm);
+    });
+   }
+   public Command stopMotors(){
+    return runOnce(()-> {
+      stop();
+    });
+   }
 
   @Override
   public void periodic() {

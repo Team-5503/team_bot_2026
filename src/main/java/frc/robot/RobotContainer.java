@@ -9,15 +9,32 @@ import static edu.wpi.first.units.Units.*;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.FollowPathCommand;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.events.EventTrigger;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
+
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
+import frc.robot.Constants.*;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Feeder;
+import frc.robot.subsystems.Index;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.shooter;
 
 public class RobotContainer {
@@ -30,6 +47,7 @@ public class RobotContainer {
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
+    private final SwerveRequest.FieldCentricFacingAngle face = new SwerveRequest.FieldCentricFacingAngle();
 
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
@@ -39,8 +57,44 @@ public class RobotContainer {
 
     public final shooter shooter = new shooter();
 
+    public final Intake intake = new Intake();
+
+    public final Index index = new Index();
+
+    public final Feeder feeder = new Feeder();
+
+    private final SendableChooser<Command> autoChooser;
+
     public RobotContainer() {
+        // named commands for auto
+        NamedCommands.registerCommand(
+        "intake", 
+        intake.setPos(PivotConstants.kintake)
+        .andThen(intake.setRPM(IntakeConstants.kIntake))
+        );
+        NamedCommands.registerCommand(
+        "aim",
+        shooter.setRPM(ShooterConstants.klob)
+        .alongWith(feeder.setRPM(FeederConstants.kFeed))
+        );
+        NamedCommands.registerCommand(
+            "shoot",
+            index.setRPM(IndexConstants.kIndex)
+            .alongWith(intake.setPos(PivotConstants.kSlide))
+        );
+        NamedCommands.registerCommand(
+            "unclog",
+            index.setRPM(IndexConstants.kUnclog)
+            .alongWith(feeder.setRPM(FeederConstants.kUnclog))
+        );
+
+
+        autoChooser = AutoBuilder.buildAutoChooser("Tests");
+        SmartDashboard.putData("Auto Mode", autoChooser);
+
         configureBindings();
+
+        FollowPathCommand.warmupCommand().schedule();
     }
 
     private void configureBindings() {
@@ -78,24 +132,47 @@ public class RobotContainer {
         joystick.leftBumper().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
         drivetrain.registerTelemetry(logger::telemeterize);
+
+        // main triggers for the superstructure
+
+        final Trigger tIntake = joystick.leftBumper(); // sets the pivot to it's intake position and runs motor with a toggle
+        final Trigger tAim = joystick.leftTrigger(.5); // aims the robot towards its target and sets the motor rpm depending on the distance from target (hold)
+        final Trigger tShoot = joystick.rightTrigger(.5); // runs the index system to feed to shooter
+        final Trigger tUnclog = joystick.rightBumper();
+
+        // what the triggers do TODO: change after belton
+        tIntake.onTrue(
+            intake.setPos(PivotConstants.kintake)
+            .andThen(intake.setRPM(IntakeConstants.kIntake))
+        );
+        tIntake.onFalse(
+            intake.setRPM(0)
+        );
+
+        tAim.onTrue(
+            shooter.setRPM(ShooterConstants.klob)
+            .alongWith(feeder.setRPM(FeederConstants.kFeed))
+        );
+        tAim.onFalse(
+            shooter.setRPM(0)
+            .alongWith(feeder.setRPM(0))
+        );
+
+        tShoot.onTrue(
+            index.setRPM(IndexConstants.kIndex)
+            .alongWith(intake.setPos(PivotConstants.kSlide))
+        );
+        tShoot.onFalse(
+            index.stopMotors()
+        );
+        tUnclog.onTrue(
+            index.setRPM(IndexConstants.kUnclog)
+            .alongWith(feeder.setRPM(FeederConstants.kUnclog))
+        );
+        
     }
 
     public Command getAutonomousCommand() {
-        // Simple drive forward auton
-        final var idle = new SwerveRequest.Idle();
-        return Commands.sequence(
-            // Reset our field centric heading to match the robot
-            // facing away from our alliance station wall (0 deg).
-            drivetrain.runOnce(() -> drivetrain.seedFieldCentric(Rotation2d.kZero)),
-            // Then slowly drive forward (away from us) for 5 seconds.
-            drivetrain.applyRequest(() ->
-                drive.withVelocityX(0.5)
-                    .withVelocityY(0)
-                    .withRotationalRate(0)
-            )
-            .withTimeout(5.0),
-            // Finally idle for the rest of auton
-            drivetrain.applyRequest(() -> idle)
-        );
+        return autoChooser.getSelected();
     }
 }
