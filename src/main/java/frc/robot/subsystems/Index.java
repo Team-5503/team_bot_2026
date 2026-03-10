@@ -66,7 +66,8 @@ public class Index extends SubsystemBase {
   }
 
   public void spin(double rpm){
-    closedLoopControllerI.setSetpoint(rpm, ControlType.kVelocity);
+    // closedLoopControllerI.setSetpoint(rpm, ControlType.kVelocity);
+    index.set(rpm);
   }
 
   public void stop(){

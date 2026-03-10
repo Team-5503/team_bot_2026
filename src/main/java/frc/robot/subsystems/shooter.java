@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
@@ -23,14 +24,15 @@ public class shooter extends SubsystemBase {
   SparkMax shooterL, shooterR;
 
   private SparkClosedLoopController closedLoopControllerL, closedLoopControllerR;
-  private RelativeEncoder shooterEncoder;
+  private RelativeEncoder shooterLEncoder, shooterREncoder;
   private SparkMaxConfig shooterLConfig;
   private SparkMaxConfig shooterRConfig;
   public shooter() {
     shooterL = new SparkMax(ShooterConstants.kLCanID, MotorType.kBrushless); // main motor
     shooterR = new SparkMax(ShooterConstants.kRCanRID, MotorType.kBrushless); // will follow in reverse
 
-    shooterEncoder = shooterL.getEncoder(); // encoder of main motor
+    shooterLEncoder = shooterL.getEncoder(); // encoder of main motor
+    shooterREncoder = shooterR.getEncoder();
     closedLoopControllerL = shooterL.getClosedLoopController(); // closed loop controller of left motor
     closedLoopControllerR = shooterR.getClosedLoopController(); // closed loop controller of left motor
 
@@ -61,11 +63,25 @@ public class shooter extends SubsystemBase {
       .positionConversionFactor(ShooterConstants.kPositionCoversionFactor);
     
     shooterRConfig
-      .apply(shooterLConfig)
-      .inverted(ShooterConstants.kRInverted);
+      .inverted(ShooterConstants.kRInverted)
+      .smartCurrentLimit(ShooterConstants.kStallLimit, ShooterConstants.kFreeLimit)
+      .idleMode(ShooterConstants.kIdleMode); 
+    shooterRConfig.closedLoop
+      .feedbackSensor(ShooterConstants.kSensor) 
+      .p(ShooterConstants.kP)
+      .i(ShooterConstants.kI)
+      .d(ShooterConstants.kD)
+      .outputRange(ShooterConstants.kMinOutputLimit,ShooterConstants.kMaxOutputLimit);
+    shooterRConfig.softLimit
+      .forwardSoftLimitEnabled(false)
+      .forwardSoftLimit(ShooterConstants.kForwardSoftLimit) 
+      .reverseSoftLimitEnabled(false)
+      .reverseSoftLimit(ShooterConstants.kReverseSoftLimit);
+    shooterRConfig.encoder
+      .positionConversionFactor(ShooterConstants.kPositionCoversionFactor);
 
       shooterL.configure(shooterLConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-      // shooterR.configure(shooterRConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+      shooterR.configure(shooterRConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
   public void spin(double rpm){
@@ -79,7 +95,7 @@ public class shooter extends SubsystemBase {
   }
 
   private double getVelocity(){
-    return shooterEncoder.getVelocity();
+    return shooterLEncoder.getVelocity();
   }
 
   private double getError() {
@@ -122,5 +138,11 @@ public class shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("left shooter RPM", shooterLEncoder.getVelocity());
+    SmartDashboard.putNumber("left shooter setpoint", closedLoopControllerL.getSetpoint());
+    SmartDashboard.putNumber("Right shooter setpoint", closedLoopControllerR.getSetpoint());
+    SmartDashboard.putNumber("shooter Left current", shooterL.getOutputCurrent());
+    SmartDashboard.putNumber("shooter Left voltage", shooterL.getBusVoltage());
+
   }
 }

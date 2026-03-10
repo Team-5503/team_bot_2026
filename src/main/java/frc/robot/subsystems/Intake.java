@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
@@ -110,7 +111,8 @@ public class Intake extends SubsystemBase {
   
 
   public void spin(double rpm){
-    closedLoopControllerI.setSetpoint(rpm, ControlType.kVelocity);
+    // closedLoopControllerI.setSetpoint(rpm, ControlType.kVelocity); TODO: fix
+    intake.set(rpm);
   }
 
   public void stop(){
@@ -189,5 +191,7 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("pivot positon", pivotEncoder.getPosition());
+    SmartDashboard.putNumber("intake RPM", intakeEncoder.getVelocity());
   }
 }

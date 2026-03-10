@@ -45,6 +45,10 @@ public class RobotContainer {
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+
+    private final SwerveRequest.RobotCentric botdrive = new SwerveRequest.RobotCentric()
+        .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+        .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
     private final SwerveRequest.FieldCentricFacingAngle face = new SwerveRequest.FieldCentricFacingAngle();
@@ -55,41 +59,41 @@ public class RobotContainer {
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
-    public final shooter shooter = new shooter();
+    // public final shooter shooter = new shooter();
 
-    public final Intake intake = new Intake();
+    // public final Intake intake = new Intake();
 
-    public final Index index = new Index();
+    // public final Index index = new Index();
 
-    public final Feeder feeder = new Feeder();
+    // public final Feeder feeder = new Feeder();
 
     private final SendableChooser<Command> autoChooser;
 
     public RobotContainer() {
         // named commands for auto
-        NamedCommands.registerCommand(
-        "intake", 
-        intake.setPos(PivotConstants.kintake)
-        .andThen(intake.setRPM(IntakeConstants.kIntake))
-        );
-        NamedCommands.registerCommand(
-        "aim",
-        shooter.setRPM(ShooterConstants.klob)
-        .alongWith(feeder.setRPM(FeederConstants.kFeed))
-        );
-        NamedCommands.registerCommand(
-            "shoot",
-            index.setRPM(IndexConstants.kIndex)
-            .alongWith(intake.setPos(PivotConstants.kSlide))
-        );
-        NamedCommands.registerCommand(
-            "unclog",
-            index.setRPM(IndexConstants.kUnclog)
-            .alongWith(feeder.setRPM(FeederConstants.kUnclog))
-        );
+        // NamedCommands.registerCommand(
+        // "intake", 
+        // intake.setPos(PivotConstants.kintake)
+        // .andThen(intake.setRPM(IntakeConstants.kIntake))
+        // );
+        // NamedCommands.registerCommand(
+        // "aim",
+        // shooter.setRPM(ShooterConstants.klob)
+        // .alongWith(feeder.setRPM(FeederConstants.kFeed))
+        // );
+        // NamedCommands.registerCommand(
+        //     "shoot",
+        //     index.setRPM(IndexConstants.kIndex)
+        //     .alongWith(intake.setPos(PivotConstants.kSlide))
+        // );
+        // NamedCommands.registerCommand(
+        //     "unclog",
+        //     index.setRPM(IndexConstants.kUnclog)
+        //     .alongWith(feeder.setRPM(FeederConstants.kUnclog))
+        // );
 
 
-        autoChooser = AutoBuilder.buildAutoChooser("Tests");
+        autoChooser = AutoBuilder.buildAutoChooser("middle shoot");
         SmartDashboard.putData("Auto Mode", autoChooser);
 
         configureBindings();
@@ -103,7 +107,7 @@ public class RobotContainer {
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
-                drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
+                botdrive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
                     .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
                     .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
@@ -116,10 +120,10 @@ public class RobotContainer {
             drivetrain.applyRequest(() -> idle).ignoringDisable(true)
         );
 
-        joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
-        joystick.b().whileTrue(drivetrain.applyRequest(() ->
-            point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))
-        ));
+        // joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
+        // joystick.b().whileTrue(drivetrain.applyRequest(() ->
+        //     point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))
+        // ));
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
@@ -128,8 +132,8 @@ public class RobotContainer {
         joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
         joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
-        // Reset the field-centric heading on left bumper press.
-        joystick.leftBumper().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
+        // Reset the field-centric heading on d-pad up press.
+        joystick.povUp().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
         drivetrain.registerTelemetry(logger::telemeterize);
 
@@ -141,38 +145,47 @@ public class RobotContainer {
         final Trigger tUnclog = joystick.rightBumper();
 
         // what the triggers do TODO: change after belton
-        tIntake.onTrue(
-            intake.setPos(PivotConstants.kintake)
-            .andThen(intake.setRPM(IntakeConstants.kIntake))
-        );
-        tIntake.onFalse(
-            intake.setRPM(0)
-        );
+        // tIntake.onTrue(
+        //     intake.setPos(PivotConstants.kintake)
+        //     .andThen(intake.setRPM(IntakeConstants.kIntake))
+        // );
+        // tIntake.onFalse(
+        //     intake.stopMotors()
+        //     .andThen(intake.setPos(PivotConstants.kintake))
+        // );
 
-        tAim.onTrue(
-            shooter.setRPM(ShooterConstants.klob)
-            .alongWith(feeder.setRPM(FeederConstants.kFeed))
-        );
-        tAim.onFalse(
-            shooter.setRPM(0)
-            .alongWith(feeder.setRPM(0))
-        );
+        // tAim.onTrue(
+        //     shooter.setRPM(ShooterConstants.klob)
+        //     .alongWith(intake.setPos(PivotConstants.kSlide))
+        //     .alongWith(feeder.setRPM(FeederConstants.kFeed))
+        // );
+        // tAim.onFalse(
+        //     shooter.stopMotors()
+        //     .alongWith(feeder.stopMotors())
+        // );
 
-        tShoot.onTrue(
-            index.setRPM(IndexConstants.kIndex)
-            .alongWith(intake.setPos(PivotConstants.kSlide))
-        );
-        tShoot.onFalse(
-            index.stopMotors()
-        );
-        tUnclog.onTrue(
-            index.setRPM(IndexConstants.kUnclog)
-            .alongWith(feeder.setRPM(FeederConstants.kUnclog))
-        );
+        // tShoot.onTrue(
+        //     index.setRPM(IndexConstants.kIndex)
+        //     .alongWith(intake.setPos(PivotConstants.kSlide))
+        // );
+        // tShoot.onFalse(
+        //     index.stopMotors()
+        // );
+        // tUnclog.onTrue(
+        //     index.setRPM(IndexConstants.kUnclog)
+        //     .alongWith(feeder.setRPM(FeederConstants.kUnclog))
+        //     .alongWith(shooter.setRPM(ShooterConstants.kWhyWouldYouUseThis))
+        // );
         
     }
 
     public Command getAutonomousCommand() {
-        return autoChooser.getSelected();
+        // return autoChooser.getSelected(); TODO: set up correctly
+        return drivetrain.applyRequest(() ->
+                drive.withVelocityX(0) // Drive forward with negative Y (forward)
+                    .withVelocityY(0) // Drive left with negative X (left)
+                    .withRotationalRate(0) // Drive counterclockwise with negative X (left)
+            );
+        
     }
 }
