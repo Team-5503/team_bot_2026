@@ -31,7 +31,8 @@ public class Intake extends SubsystemBase {
   private SparkClosedLoopController closedLoopControllerI;
   private RelativeEncoder intakeEncoder;
   private SparkMaxConfig intakeConfig;
-  private SparkMaxConfig pivotConfig; // TODO: set up for pivot
+  private SparkMaxConfig pivotConfig;
+  private double targetPos; // TODO: set up for pivot
   /** Creates a new Intake. */
   public Intake() {
     intake = new SparkMax(IntakeConstants.kCanID, MotorType.kBrushless); // will grip the balls
@@ -44,6 +45,7 @@ public class Intake extends SubsystemBase {
 
     closedLoopControllerI = intake.getClosedLoopController(); // closed loop controller of main motor
     closedLoopControllerP = pivot.getClosedLoopController();
+    targetPos = 0;
 
     configure();
   }
@@ -179,6 +181,20 @@ public class Intake extends SubsystemBase {
    public Command setPos(double pos){
     return runOnce(() -> {
       setPosition(pos);
+      targetPos = pos;
+    });
+   }
+
+   public Command shift(){
+    return runOnce(() -> {
+    if (targetPos == PivotConstants.kintake){
+      targetPos = PivotConstants.kSlide;
+      setPosition(targetPos);
+    }
+    else{
+      targetPos = PivotConstants.kintake;
+      setPosition(targetPos);
+    }
     });
    }
 

@@ -24,6 +24,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -59,38 +61,38 @@ public class RobotContainer {
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
-    // public final shooter shooter = new shooter();
+    public final shooter shooter = new shooter();
 
-    // public final Intake intake = new Intake();
+    public final Intake intake = new Intake();
 
-    // public final Index index = new Index();
+    public final Index index = new Index();
 
-    // public final Feeder feeder = new Feeder();
+    public final Feeder feeder = new Feeder();
 
     private final SendableChooser<Command> autoChooser;
 
     public RobotContainer() {
         // named commands for auto
-        // NamedCommands.registerCommand(
-        // "intake", 
-        // intake.setPos(PivotConstants.kintake)
-        // .andThen(intake.setRPM(IntakeConstants.kIntake))
-        // );
-        // NamedCommands.registerCommand(
-        // "aim",
-        // shooter.setRPM(ShooterConstants.klob)
-        // .alongWith(feeder.setRPM(FeederConstants.kFeed))
-        // );
-        // NamedCommands.registerCommand(
-        //     "shoot",
-        //     index.setRPM(IndexConstants.kIndex)
-        //     .alongWith(intake.setPos(PivotConstants.kSlide))
-        // );
-        // NamedCommands.registerCommand(
-        //     "unclog",
-        //     index.setRPM(IndexConstants.kUnclog)
-        //     .alongWith(feeder.setRPM(FeederConstants.kUnclog))
-        // );
+        NamedCommands.registerCommand(
+        "intake", 
+        intake.setPos(PivotConstants.kintake)
+        .andThen(intake.setRPM(IntakeConstants.kIntake))
+        );
+        NamedCommands.registerCommand(
+        "aim",
+        shooter.setRPM(ShooterConstants.klob)
+        .alongWith(feeder.setRPM(FeederConstants.kFeed))
+        );
+        NamedCommands.registerCommand(
+            "shoot",
+            index.setRPM(IndexConstants.kIndex)
+            .alongWith(intake.setPos(PivotConstants.kSlide))
+        );
+        NamedCommands.registerCommand(
+            "unclog",
+            index.setRPM(IndexConstants.kUnclog)
+            .alongWith(feeder.setRPM(FeederConstants.kUnclog))
+        );
 
 
         autoChooser = AutoBuilder.buildAutoChooser("middle shoot");
@@ -142,40 +144,43 @@ public class RobotContainer {
         final Trigger tIntake = joystick.leftBumper(); // sets the pivot to it's intake position and runs motor with a toggle
         final Trigger tAim = joystick.leftTrigger(.5); // aims the robot towards its target and sets the motor rpm depending on the distance from target (hold)
         final Trigger tShoot = joystick.rightTrigger(.5); // runs the index system to feed to shooter
-        final Trigger tUnclog = joystick.rightBumper();
+        final Trigger tShift = joystick.rightBumper();
 
         // what the triggers do TODO: change after belton
-        // tIntake.onTrue(
-        //     intake.setPos(PivotConstants.kintake)
-        //     .andThen(intake.setRPM(IntakeConstants.kIntake))
-        // );
-        // tIntake.onFalse(
-        //     intake.stopMotors()
-        //     .andThen(intake.setPos(PivotConstants.kintake))
-        // );
+        tIntake.onTrue(
+            intake.setPos(PivotConstants.kintake)
+            .andThen(intake.setRPM(IntakeConstants.kIntake))
+        );
+        tIntake.onFalse(
+            intake.stopMotors()
+            .andThen(intake.setPos(PivotConstants.kintake))
+        );
 
-        // tAim.onTrue(
-        //     shooter.setRPM(ShooterConstants.klob)
-        //     .alongWith(intake.setPos(PivotConstants.kSlide))
-        //     .alongWith(feeder.setRPM(FeederConstants.kFeed))
-        // );
-        // tAim.onFalse(
-        //     shooter.stopMotors()
-        //     .alongWith(feeder.stopMotors())
-        // );
+        tAim.onTrue(
+            shooter.setRPM(ShooterConstants.klob)
+            
+            .alongWith(feeder.setRPM(FeederConstants.kFeed))
+        );
+        tAim.onFalse(
+            shooter.stopMotors()
+            .alongWith(feeder.stopMotors())
+        );
 
-        // tShoot.onTrue(
-        //     index.setRPM(IndexConstants.kIndex)
-        //     .alongWith(intake.setPos(PivotConstants.kSlide))
-        // );
-        // tShoot.onFalse(
-        //     index.stopMotors()
-        // );
-        // tUnclog.onTrue(
-        //     index.setRPM(IndexConstants.kUnclog)
-        //     .alongWith(feeder.setRPM(FeederConstants.kUnclog))
-        //     .alongWith(shooter.setRPM(ShooterConstants.kWhyWouldYouUseThis))
-        // );
+        tShoot.onTrue(
+            new RepeatCommand(
+                index.setRPM(IndexConstants.kIndex)
+                .andThen(new WaitCommand(1.5))
+                .andThen(index.setRPM(IndexConstants.kUnclog))
+                .andThen(new WaitCommand(.25))
+            )
+            
+        );
+        tShoot.onFalse(
+            index.stopMotors()
+        );
+        tShift.onTrue(
+            intake.shift()
+        );
         
     }
 
