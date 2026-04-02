@@ -148,12 +148,12 @@ public class RobotContainer {
 
         // what the triggers do TODO: change after belton
         tIntake.onTrue(
-            intake.setPos(PivotConstants.kintake)
-            .andThen(intake.setRPM(IntakeConstants.kIntake))
+            intake.setRPM(IntakeConstants.kIntake)
+            //.andThen(intake.setPos(PivotConstants.kintake))
         );
         tIntake.onFalse(
             intake.stopMotors()
-            .andThen(intake.setPos(PivotConstants.kintake))
+            //.andThen(intake.setPos(PivotConstants.kintake))
         );
 
         tAim.onTrue(

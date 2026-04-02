@@ -66,7 +66,7 @@ public final class Constants {
 
         // closed loop
         public static final FeedbackSensor kSensor = FeedbackSensor.kPrimaryEncoder;
-        public static final double kP = .005;
+        public static final double kP = .004;
         public static final double kI = 0;
         public static final double kD = .001;
         public static final double kFf = 0;
@@ -84,7 +84,7 @@ public final class Constants {
         // set modes TODO: change after testing
         public static final double kStow = 4; 
         public static final double kSlide = 4.2;
-        public static final double kintake = 1.6; 
+        public static final double kintake = 1.5; 
 
     }
     // for the bot's intake subsystem
@@ -117,7 +117,7 @@ public final class Constants {
         // tolerance to compare the shooter speed error with
         public static final double kTolerance = 20; // TODO: change if needed
         // set speeds
-        public static final double kIntake = .5;
+        public static final double kIntake = .6;
         public static final double kOutake = -.5;
     }
     // For the bot's indexer subsystem

@@ -85,6 +85,7 @@ public class Intake extends SubsystemBase {
       .p(PivotConstants.kP)
       .i(PivotConstants.kI)
       .d(PivotConstants.kD)
+      .minOutput(0)
       .outputRange(PivotConstants.kMinOutputLimit,PivotConstants.kMaxOutputLimit);
     pivotConfig.softLimit
       .forwardSoftLimitEnabled(false)
