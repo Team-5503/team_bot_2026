@@ -5,11 +5,14 @@
   "pathFolders": [
     "Froggy",
     "Laddle",
-    "New Folder",
+    "The Drift Master",
     "Simple Shoot",
     "The Middle Man"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "Autonomous Paths That Made Me Want To Bash My Head Into A Wall",
+    "The Boring Paths"
+  ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,

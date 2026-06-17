@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 2.8668130630630633,
-        "y": 4.872545045045046
+        "x": 2.7956071428571425,
+        "y": 4.893410714285714
       },
       "prevControl": {
-        "x": 2.744245495495496,
-        "y": 5.740731981981984
+        "x": 2.6730395752895753,
+        "y": 5.761597651222653
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -26.565051177077823
+    "rotation": 153.98053980364003
   },
   "reversed": false,
   "folder": "Laddle",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 91.84761026599459
+    "rotation": -88.7269699799433
   },
   "useDefaultConstraints": true
 }

@@ -20,7 +20,7 @@
         "y": 7.569031531531532
       },
       "prevControl": {
-        "x": 0.4869594594594599,
+        "x": 0.4869594594594598,
         "y": 6.569031531531532
       },
       "nextControl": null,
@@ -31,7 +31,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1,
-      "rotationDegrees": -90.0
+      "rotationDegrees": -57.804266065286775
     }
   ],
   "constraintZones": [],
@@ -47,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 90.0
   },
   "reversed": false,
   "folder": "The Middle Man",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 136.3971810272964
   },
   "useDefaultConstraints": true
 }

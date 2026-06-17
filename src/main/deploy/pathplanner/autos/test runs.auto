@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "3 meter test"
+            "pathName": "3 Meter Test"
           }
         },
         {
@@ -19,7 +19,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "spin"
+            "pathName": "Spin"
           }
         },
         {
@@ -31,7 +31,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "3 meter test"
+            "pathName": "3 Meter Test"
           }
         },
         {
@@ -43,7 +43,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "spin"
+            "pathName": "Spin"
           }
         },
         {
@@ -55,13 +55,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "3 meter test"
+            "pathName": "3 Meter Test"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "The Boring Paths",
   "choreoAuto": false
 }
