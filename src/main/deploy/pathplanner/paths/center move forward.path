@@ -3,44 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-<<<<<<<< HEAD:src/main/deploy/pathplanner/paths/Straight Back.path
-        "x": 3.5,
-        "y": 4.0
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 2.238,
-        "y": 4.0
-========
         "x": 2.0,
-        "y": 7.0
+        "y": 4.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.25,
-        "y": 7.0
->>>>>>>> 1ca8efffd628f40c2215138f1189f6afd401fb1f:src/main/deploy/pathplanner/paths/do nothing.path
+        "x": 3.0,
+        "y": 4.0
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-<<<<<<<< HEAD:src/main/deploy/pathplanner/paths/Straight Back.path
-        "x": 1.7432770270270272,
+        "x": 3.3,
         "y": 4.0
       },
       "prevControl": {
-        "x": 2.2432770270270272,
+        "x": 2.3,
         "y": 4.0
-========
-        "x": 2.0,
-        "y": 7.0
-      },
-      "prevControl": {
-        "x": 1.75,
-        "y": 7.0
->>>>>>>> 1ca8efffd628f40c2215138f1189f6afd401fb1f:src/main/deploy/pathplanner/paths/do nothing.path
       },
       "nextControl": null,
       "isLocked": false,
@@ -61,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": "Simple Shoot",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

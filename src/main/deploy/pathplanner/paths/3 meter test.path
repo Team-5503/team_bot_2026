@@ -3,44 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-<<<<<<<< HEAD:src/main/deploy/pathplanner/paths/Straight Back.path
-        "x": 3.5,
-        "y": 4.0
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 2.238,
-        "y": 4.0
-========
         "x": 2.0,
-        "y": 7.0
+        "y": 0.7
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.25,
-        "y": 7.0
->>>>>>>> 1ca8efffd628f40c2215138f1189f6afd401fb1f:src/main/deploy/pathplanner/paths/do nothing.path
+        "x": 3.0,
+        "y": 0.7000000000000002
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-<<<<<<<< HEAD:src/main/deploy/pathplanner/paths/Straight Back.path
-        "x": 1.7432770270270272,
-        "y": 4.0
+        "x": 5.0,
+        "y": 0.7
       },
       "prevControl": {
-        "x": 2.2432770270270272,
-        "y": 4.0
-========
+        "x": 5.25,
+        "y": 0.7000000000000002
+      },
+      "nextControl": {
+        "x": 4.75,
+        "y": 0.6999999999999997
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
         "x": 2.0,
-        "y": 7.0
+        "y": 0.7
       },
       "prevControl": {
-        "x": 1.75,
-        "y": 7.0
->>>>>>>> 1ca8efffd628f40c2215138f1189f6afd401fb1f:src/main/deploy/pathplanner/paths/do nothing.path
+        "x": 3.0,
+        "y": 0.6999999999999998
       },
       "nextControl": null,
       "isLocked": false,
@@ -61,13 +58,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": "Simple Shoot",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }
