@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "do nothing"
+            "pathName": "Angle"
           }
         }
       ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": null,
   "choreoAuto": false
 }

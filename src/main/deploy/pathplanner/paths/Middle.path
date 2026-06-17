@@ -3,44 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-<<<<<<<< HEAD:src/main/deploy/pathplanner/paths/Straight Back.path
-        "x": 3.5,
-        "y": 4.0
+        "x": 4.000563063063064,
+        "y": 7.364752252252252
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.238,
-        "y": 4.0
-========
-        "x": 2.0,
-        "y": 7.0
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 2.25,
-        "y": 7.0
->>>>>>>> 1ca8efffd628f40c2215138f1189f6afd401fb1f:src/main/deploy/pathplanner/paths/do nothing.path
+        "x": 4.000563063063064,
+        "y": 6.364752252252252
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-<<<<<<<< HEAD:src/main/deploy/pathplanner/paths/Straight Back.path
-        "x": 1.7432770270270272,
-        "y": 4.0
+        "x": 2.999594594594595,
+        "y": 5.597736486486486
       },
       "prevControl": {
-        "x": 2.2432770270270272,
-        "y": 4.0
-========
-        "x": 2.0,
-        "y": 7.0
-      },
-      "prevControl": {
-        "x": 1.75,
-        "y": 7.0
->>>>>>>> 1ca8efffd628f40c2215138f1189f6afd401fb1f:src/main/deploy/pathplanner/paths/do nothing.path
+        "x": 2.999594594594595,
+        "y": 6.597736486486486
       },
       "nextControl": null,
       "isLocked": false,
@@ -61,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -44.09061955080082
   },
   "reversed": false,
-  "folder": "Simple Shoot",
+  "folder": "The Middle Man",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

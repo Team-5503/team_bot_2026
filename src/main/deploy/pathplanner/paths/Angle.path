@@ -3,51 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-<<<<<<<< HEAD:src/main/deploy/pathplanner/paths/Straight Back.path
-        "x": 3.5,
-        "y": 4.0
+        "x": 4.010777027027027,
+        "y": 0.5724662162162166
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.238,
-        "y": 4.0
-========
-        "x": 2.0,
-        "y": 7.0
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 2.25,
-        "y": 7.0
->>>>>>>> 1ca8efffd628f40c2215138f1189f6afd401fb1f:src/main/deploy/pathplanner/paths/do nothing.path
+        "x": 3.9290653153153157,
+        "y": 0.8584572072072081
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-<<<<<<<< HEAD:src/main/deploy/pathplanner/paths/Straight Back.path
-        "x": 1.7432770270270272,
-        "y": 4.0
+        "x": 2.693175675675676,
+        "y": 2.819538288288288
       },
       "prevControl": {
-        "x": 2.2432770270270272,
-        "y": 4.0
-========
-        "x": 2.0,
-        "y": 7.0
-      },
-      "prevControl": {
-        "x": 1.75,
-        "y": 7.0
->>>>>>>> 1ca8efffd628f40c2215138f1189f6afd401fb1f:src/main/deploy/pathplanner/paths/do nothing.path
+        "x": 3.1221621621621627,
+        "y": 2.094346846846847
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": -90.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -61,7 +47,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 30.46554491945976
   },
   "reversed": false,
   "folder": "Simple Shoot",

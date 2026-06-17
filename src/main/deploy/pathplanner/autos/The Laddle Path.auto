@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Arch Bend"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Through 24 2.0"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Arch Bend 2.0"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
