@@ -9,6 +9,8 @@ import static edu.wpi.first.units.Units.*;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import org.photonvision.PhotonCamera;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.FollowPathCommand;
@@ -41,10 +43,14 @@ import frc.robot.subsystems.shooter;
 
 public class RobotContainer {
     private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+    private double MaxAngularRate = RotationsPerSecond.of(0.5).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+            .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+
+    private final SwerveRequest.FieldCentric aimdrive = new SwerveRequest.FieldCentric()
             .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
 
@@ -63,35 +69,49 @@ public class RobotContainer {
 
     public final shooter shooter = new shooter();
 
-    public final Intake intake = new Intake();
+    public final Intake intake = new Intake(); 
 
     public final Index index = new Index();
 
-    public final Feeder feeder = new Feeder();
+    // public final Feeder feeder = new Feeder();
+
+    public PhotonCamera ll3 = new PhotonCamera("ll3");
 
     private final SendableChooser<Command> autoChooser;
 
     public RobotContainer() {
         // named commands for auto
-        NamedCommands.registerCommand(
+        NamedCommands.registerCommand( 
         "intake", 
         intake.setPos(PivotConstants.kintake)
         .andThen(intake.setRPM(IntakeConstants.kIntake))
+        ); 
+        NamedCommands.registerCommand(
+        "aim 2-3 ft",
+        shooter.setRPM(ShooterConstants.k2to3ft)
         );
         NamedCommands.registerCommand(
-        "aim",
-        shooter.setRPM(ShooterConstants.klob)
-        .alongWith(feeder.setRPM(FeederConstants.kFeed))
+        "aim from tower",
+        shooter.setRPM(ShooterConstants.ktower)
         );
         NamedCommands.registerCommand(
             "shoot",
-            index.setRPM(IndexConstants.kIndex)
-            .alongWith(intake.setPos(PivotConstants.kSlide))
+            new RepeatCommand(
+                index.setRPM(IndexConstants.kIndex)
+                .andThen(new WaitCommand(1))
+                .andThen(index.setRPM(IndexConstants.kUnclog))
+                .andThen(new WaitCommand(.25))
+            )
+        );
+        NamedCommands.registerCommand(
+        "stop shooter",
+        shooter.stopMotors()
+        .alongWith(index.stopMotors())
         );
         NamedCommands.registerCommand(
             "unclog",
             index.setRPM(IndexConstants.kUnclog)
-            .alongWith(feeder.setRPM(FeederConstants.kUnclog))
+            //.alongWith(feeder.setRPM(FeederConstants.kUnclog))
         );
 
 
@@ -101,6 +121,8 @@ public class RobotContainer {
         configureBindings();
 
         FollowPathCommand.warmupCommand().schedule();
+
+        ll3.setDriverMode(true);
     }
 
     private void configureBindings() {
@@ -109,7 +131,7 @@ public class RobotContainer {
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
-                botdrive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
+                drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
                     .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
                     .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
@@ -129,68 +151,87 @@ public class RobotContainer {
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
-        joystick.back().and(joystick.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-        joystick.back().and(joystick.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-        joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-        joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
+        // joystick.back().and(joystick.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
+        // joystick.back().and(joystick.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
+        // joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
+        // joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
         // Reset the field-centric heading on d-pad up press.
-        joystick.povUp().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
+        joystick.y().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
         drivetrain.registerTelemetry(logger::telemeterize);
 
         // main triggers for the superstructure
 
         final Trigger tIntake = joystick.leftBumper(); // sets the pivot to it's intake position and runs motor with a toggle
-        final Trigger tAim = joystick.leftTrigger(.5); // aims the robot towards its target and sets the motor rpm depending on the distance from target (hold)
+        final Trigger tAim = joystick.leftTrigger(.3); // aims the robot towards its target and sets the motor rpm depending on the distance from target (hold)
         final Trigger tShoot = joystick.rightTrigger(.5); // runs the index system to feed to shooter
         final Trigger tShift = joystick.rightBumper();
+        final Trigger tUnclogIntake = joystick.a();
+        final Trigger tUnclogIndex = joystick.b();
 
-        // what the triggers do TODO: change after belton
-        tIntake.onTrue(
+        // what the triggers do 
+        tIntake.onTrue( 
             intake.setRPM(IntakeConstants.kIntake)
             //.andThen(intake.setPos(PivotConstants.kintake))
         );
-        tIntake.onFalse(
+        tIntake.onFalse( 
             intake.stopMotors()
-            //.andThen(intake.setPos(PivotConstants.kintake))
+            .andThen(intake.setPos(PivotConstants.kintake))
         );
 
         tAim.onTrue(
-            shooter.setRPM(ShooterConstants.klob)
+            shooter.setRPM(ShooterConstants.ktower)
             
-            .alongWith(feeder.setRPM(FeederConstants.kFeed))
+            //.alongWith(feeder.setRPM(FeederConstants.kFeed))
         );
         tAim.onFalse(
             shooter.stopMotors()
-            .alongWith(feeder.stopMotors())
+            //.alongWith(feeder.stopMotors())
         );
 
         tShoot.onTrue(
             new RepeatCommand(
                 index.setRPM(IndexConstants.kIndex)
-                .andThen(new WaitCommand(1.5))
+                .andThen(new WaitCommand(1))
                 .andThen(index.setRPM(IndexConstants.kUnclog))
                 .andThen(new WaitCommand(.25))
             )
-            
         );
         tShoot.onFalse(
             index.stopMotors()
         );
-        tShift.onTrue(
+        tShift.onTrue( 
             intake.shift()
         );
+
+        tUnclogIntake.onTrue( 
+            intake.setRPM(IntakeConstants.kOutake)
+            //.andThen(intake.setPos(PivotConstants.kintake))
+        );
+        tUnclogIntake.onFalse( 
+            intake.setRPM(0)
+            
+        );
+
+        tUnclogIndex.onTrue(
+            index.setRPM(IndexConstants.kUnclog)
+        );
+        tUnclogIndex.onFalse(
+            index.setRPM(0)
+        );
+
+        
         
     }
 
     public Command getAutonomousCommand() {
-        // return autoChooser.getSelected(); TODO: set up correctly
-        return drivetrain.applyRequest(() ->
-                drive.withVelocityX(0) // Drive forward with negative Y (forward)
-                    .withVelocityY(0) // Drive left with negative X (left)
-                    .withRotationalRate(0) // Drive counterclockwise with negative X (left)
-            );
+        return autoChooser.getSelected(); //TODO: set up correctly
+        // return drivetrain.applyRequest(() ->
+        //         drive.withVelocityX(0) // Drive forward with negative Y (forward)
+        //             .withVelocityY(0) // Drive left with negative X (left)
+        //             .withRotationalRate(0) // Drive counterclockwise with negative X (left)
+        //     );
         
     }
 }

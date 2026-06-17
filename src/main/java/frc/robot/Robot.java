@@ -5,10 +5,14 @@
 package frc.robot;
 
 import com.ctre.phoenix6.HootAutoReplay;
+import com.ctre.phoenix6.SignalLogger;
+import com.revrobotics.util.StatusLogger;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.net.PortForwarder;
 
 public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
@@ -16,17 +20,46 @@ public class Robot extends TimedRobot {
     private final RobotContainer m_robotContainer;
 
     /* log and replay timestamp and joystick data */
-    private final HootAutoReplay m_timeAndJoystickReplay = new HootAutoReplay()
-        .withTimestampReplay()
-        .withJoystickReplay();
+    // private final HootAutoReplay m_timeAndJoystickReplay = new HootAutoReplay()
+    //     .withTimestampReplay()
+    //     .withJoystickReplay();
 
     public Robot() {
         m_robotContainer = new RobotContainer();
+        SignalLogger.enableAutoLogging(false);
+        SignalLogger.stop();
+        StatusLogger.disableAutoLogging();
+        StatusLogger.stop();
+
+         // (robotIP):5801 will now point to a Limelight3A's (id 0) web interface stream:
+        // (robotIP):5800 will now point to a Limelight3A's (id 0) video stream:
+        PortForwarder.add(5801, "172.29.0.1", 5801);
+        PortForwarder.add(5802, "172.29.0.1", 5802);
+        PortForwarder.add(5803, "172.29.0.1", 5803);
+        PortForwarder.add(5804, "172.29.0.1", 5804);
+        PortForwarder.add(5805, "172.29.0.1", 5805);
+        PortForwarder.add(5806, "172.29.0.1", 5806);
+        PortForwarder.add(5807, "172.29.0.1", 5807);
+        PortForwarder.add(5808, "172.29.0.1", 5808);
+        PortForwarder.add(5809, "172.29.0.1", 5809);
+
+        // (robotIP):5811 will now point to a Limelight3A's (id 1) web interface stream:
+        // (robotIP):5810 will now point to a Limelight3A's (id 1) video stream:
+        PortForwarder.add(5811, "172.28.0.1", 5801);
+        PortForwarder.add(5812, "172.28.0.1", 5802);
+        PortForwarder.add(5813, "172.28.0.1", 5803);
+        PortForwarder.add(5814, "172.28.0.1", 5804);
+        PortForwarder.add(5815, "172.28.0.1", 5805);
+        PortForwarder.add(5816, "172.28.0.1", 5806);
+        PortForwarder.add(5817, "172.28.0.1", 5807);
+        PortForwarder.add(5818, "172.28.0.1", 5808);
+        PortForwarder.add(5819, "172.28.0.1", 5809);
+        CameraServer.startAutomaticCapture();
     }
 
     @Override
     public void robotPeriodic() {
-        m_timeAndJoystickReplay.update();
+        // m_timeAndJoystickReplay.update();
         CommandScheduler.getInstance().run(); 
     }
 

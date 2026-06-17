@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
@@ -27,6 +28,9 @@ public class Index extends SubsystemBase {
   private SparkClosedLoopController closedLoopControllerI;
   private RelativeEncoder indexEncoder;
   private SparkMaxConfig indexConfig;
+
+  private double troubleshootingPercent = 0;
+  private boolean Troubleshooting = false;
 
 
   /** Creates a new Index. */
@@ -67,7 +71,12 @@ public class Index extends SubsystemBase {
 
   public void spin(double rpm){
     // closedLoopControllerI.setSetpoint(rpm, ControlType.kVelocity);
-    index.set(rpm);
+    if (Troubleshooting){
+      index.set(troubleshootingPercent);
+    }
+    else{
+      index.set(rpm);;
+    }
   }
 
   public void stop(){
@@ -118,5 +127,7 @@ public class Index extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    troubleshootingPercent = SmartDashboard.getNumber("troubleshooting percent for indexer", 0);
+    Troubleshooting = SmartDashboard.getBoolean("is we troubleshooting indexer", false);
   }
 }

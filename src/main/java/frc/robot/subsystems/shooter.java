@@ -51,6 +51,8 @@ public class shooter extends SubsystemBase { // TODO: recode to be pheonix6 moto
   private RelativeEncoder shooterLEncoder, shooterREncoder;
   private SparkMaxConfig shooterLConfig;
   private SparkMaxConfig shooterRConfig;
+  private double troubleshootingRPM = 0;
+  private boolean Troubleshooting = false;
   public shooter() {
     // shooterL = new SparkMax(ShooterConstants.kLCanID, MotorType.kBrushless); // main motor
     // shooterR = new SparkMax(ShooterConstants.kRCanRID, MotorType.kBrushless); // will follow in reverse
@@ -146,7 +148,12 @@ public class shooter extends SubsystemBase { // TODO: recode to be pheonix6 moto
   public void spin(double rpm){
     // closedLoopControllerL.setSetpoint(rpm, ControlType.kVelocity);
     // closedLoopControllerR.setSetpoint(rpm, ControlType.kVelocity);
-    shooterFxL.setControl(m_velocityVoltage.withVelocity(rpm));
+    if (Troubleshooting){
+      shooterFxL.setControl(m_velocityVoltage.withVelocity(troubleshootingRPM));
+    }
+    else{
+      shooterFxL.setControl(m_velocityVoltage.withVelocity(rpm));
+    }
   }
 
   public void stop(){
@@ -205,6 +212,13 @@ public class shooter extends SubsystemBase { // TODO: recode to be pheonix6 moto
     // SmartDashboard.putNumber("Right shooter setpoint", closedLoopControllerR.getSetpoint());
     // SmartDashboard.putNumber("shooter Left current", shooterL.getOutputCurrent());
     // SmartDashboard.putNumber("shooter Left voltage", shooterL.getBusVoltage());
-
+    // troubleshootingRPM = SmartDashboard.getNumber("troubleshooting RPM for shooter", 30);
+    // Troubleshooting = SmartDashboard.getBoolean("is we troubleshooting shooter", false);
+    SmartDashboard.putNumber("left shooter voltage", shooterFxL.getSupplyVoltage().getValueAsDouble());
+    SmartDashboard.putNumber("right shooter voltage", shooterFxR.getSupplyVoltage().getValueAsDouble());
+    SmartDashboard.putNumber("right shooter temp", shooterFxR.getProcessorTemp().getValueAsDouble());
+    SmartDashboard.putNumber("left shooter temp", shooterFxL.getProcessorTemp().getValueAsDouble());
+    SmartDashboard.putNumber("left shooter current", shooterFxL.getSupplyCurrent().getValueAsDouble());
+    SmartDashboard.putNumber("right shooter current", shooterFxR.getSupplyCurrent().getValueAsDouble());
   }
 }

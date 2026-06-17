@@ -57,8 +57,8 @@ public final class Constants {
         public static final int kCanID = 41;
         // config
         public static final boolean kInverted = true;
-        public static final int kStallLimit = 70;
-        public static final int kFreeLimit = 50;
+        public static final int kStallLimit = 80;
+        public static final int kFreeLimit = 60;
         public static final IdleMode kIdleMode = IdleMode.kBrake; // TODO: change to brake
 
         public static final double kOffset = 0;
@@ -68,23 +68,23 @@ public final class Constants {
         public static final FeedbackSensor kSensor = FeedbackSensor.kPrimaryEncoder;
         public static final double kP = .004;
         public static final double kI = 0;
-        public static final double kD = .001;
+        public static final double kD = .002;
         public static final double kFf = 0;
         public static final double kMinOutputLimit = -1;
         public static final double kMaxOutputLimit = 1;
 
         // soft limit
         public static final double kForwardSoftLimit = 130;
-        public static final double kReverseSoftLimit = -60;
+        public static final double kReverseSoftLimit = .9;
 
         // encoder 
         public static final double kPositionCoversionFactor = 1;
         public static final double kTolerance = 5;
 
         // set modes TODO: change after testing
-        public static final double kStow = 4; 
-        public static final double kSlide = 4.2;
-        public static final double kintake = 1.5; 
+        public static final double kStow = -0.193115; 
+        public static final double kSlide = -0.193115;
+        public static final double kintake = -0.054688; 
 
     }
     // for the bot's intake subsystem
@@ -95,7 +95,7 @@ public final class Constants {
         // config TODO: change to accurate
         public static final boolean kInverted = true;
         
-        public static final int kStallLimit = 60;
+        public static final int kStallLimit = 70;
         public static final int kFreeLimit = 40;
         public static final IdleMode kIdleMode = IdleMode.kCoast;
 
@@ -104,8 +104,8 @@ public final class Constants {
         public static final double kP = .001;
         public static final double kI = 0;
         public static final double kD = 0;
-        public static final double kMinOutputLimit = -.8;
-        public static final double kMaxOutputLimit = .8;
+        public static final double kMinOutputLimit = -.9;
+        public static final double kMaxOutputLimit = .9;
 
         // soft limits (will be unused for shooter)
         public static final double kForwardSoftLimit = 63;
@@ -118,7 +118,7 @@ public final class Constants {
         public static final double kTolerance = 20; // TODO: change if needed
         // set speeds
         public static final double kIntake = .6;
-        public static final double kOutake = -.5;
+        public static final double kOutake = -.7;
     }
     // For the bot's indexer subsystem
     public static class IndexConstants {
@@ -151,7 +151,7 @@ public final class Constants {
         public static final double kTolerance = 40; // TODO: change if needed
 
         // set speeds
-        public static final double kIndex = .9;
+        public static final double kIndex = .5;
         public static final double kUnclog = -.6;
     }
     // for the feeder into the shooter
@@ -198,7 +198,7 @@ public final class Constants {
         public static final boolean kLInverted = true;
         public static final boolean kRInverted = false;
         public static final int kStallLimit = 80;
-        public static final int kFreeLimit = 40;
+        public static final int kFreeLimit = 60;
         public static final IdleMode kIdleMode = IdleMode.kCoast;
 
         // pid constants TODO: change to be hopefully accurate and pray it works
@@ -223,7 +223,8 @@ public final class Constants {
         public static final double kMaxRPM = 6000;
 
         // set speeds
-        public static final double klob = 50;
-        public static final double kWhyWouldYouUseThis = -600;
+        public static final double ktower = -48;
+        public static final double k2to3ft = -38;
+        public static final double kWhyWouldYouUseThis = 10;
     }
 }
