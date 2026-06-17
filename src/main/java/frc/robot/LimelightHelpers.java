@@ -1944,4 +1944,19 @@ public class LimelightHelpers {
             PortForwarder.add(basePort + i, ip, 5800 + i);
         }
     }
+
+    public static double avgTagDist(String string) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'avgTagDist'");
+    }
+
+    public static double distToCamera(String string) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'distToCamera'");
+    }
+
+    public static int getid(String string) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getid'");
+    }
 }
