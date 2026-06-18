@@ -19,7 +19,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Over The Ridge 2.0"
+            "pathName": "Under The Trench"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Turn Into Drift"
           }
         },
         {
@@ -43,7 +49,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Over The Ridge 2.0"
+            "pathName": "Under The Trench"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Turn Into Drift"
           }
         },
         {
@@ -67,13 +79,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Over The Ridge 2.0"
+            "pathName": "Under The Trench"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Turn Into Drift"
           }
         },
         {
           "type": "path",
           "data": {
             "pathName": "THE DRIFT"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Drift Into Neutral Zone"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Through Neutral Zone 3.0"
           }
         }
       ]

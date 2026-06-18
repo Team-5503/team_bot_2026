@@ -13,7 +13,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "center move back"
+            "pathName": "Center Move Back"
           }
         },
         {
@@ -37,7 +37,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "center move forward"
+            "pathName": "Center Move Forward"
           }
         }
       ]

@@ -8,7 +8,7 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.0103888888888888,
+        "x": 1.0103888888888883,
         "y": 2.2225333333333332
       },
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": "The Drift Master",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -131.4677054161091
+    "rotation": -132.51044707800077
   },
   "useDefaultConstraints": true
 }
