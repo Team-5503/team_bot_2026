@@ -1,0 +1,37 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Forward Turn To Neutral Zone"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Through The Neutral Zone 2.0"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Over The Ridge 2.0"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Drift Into Shoot 2.0"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Autonomous Paths That Made Me Want To Bash My Head Into A Wall",
+  "choreoAuto": false
+}
