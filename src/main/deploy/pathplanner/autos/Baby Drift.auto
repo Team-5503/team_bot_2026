@@ -7,37 +7,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "3 meter test"
+            "pathName": "Forward Turn To Neutral Zone"
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 1.0
+            "pathName": "Through The Neutral Zone"
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 1.0
+            "pathName": "Over The Ridge"
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
+            "pathName": "Drift Into Shoot"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "The Boring Paths",
+  "folder": "Autonomous Paths That Made Me Want To Bash My Head Into A Wall",
   "choreoAuto": false
 }
