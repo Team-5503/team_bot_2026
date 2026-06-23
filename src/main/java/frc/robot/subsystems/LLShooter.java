@@ -4,18 +4,27 @@
 
 package frc.robot.subsystems;
 
+
+import java.util.Optional;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.LimelightHelpers;
 
 public class LLShooter extends SubsystemBase {
   /** Creates a new LLShooter. */
-  public LLShooter() {
 
+    private final int BOTH_ALLIANCE_PIPELINE = 0; //Default Fallback
+    private final int RED_ALLIANCE_PIPELINE = 1;
+    private final int BLUE_ALLIANCE_PIPELINE = 2;
+
+  public LLShooter() {
+    LimelightHelpers.setPipelineIndex("", BOTH_ALLIANCE_PIPELINE);
   }
 
-  public double getAimAssist() {
-    double drivespeed = LimelightHelpers.getTX("")*0.03;
-        return drivespeed;
+  public static double getAimAssist() {
+    double drivespeed = LimelightHelpers.getTX("")*0.01;
+        return -drivespeed;
   }
 
   public boolean getTargetExistance() {
@@ -62,6 +71,18 @@ public class LLShooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+
+  LimelightHelpers.setPipelineIndex("", BOTH_ALLIANCE_PIPELINE);
+
+  Optional<Alliance> allianceColor = DriverStation.getAlliance();
+
+  if (allianceColor.isPresent()){
+    if (allianceColor.get() == Alliance.Red){
+    LimelightHelpers.setPipelineIndex("", RED_ALLIANCE_PIPELINE);
+    }
+    else if (allianceColor.get() == Alliance.Blue){
+    LimelightHelpers.setPipelineIndex("", BLUE_ALLIANCE_PIPELINE);
+    }
+  }
   }
 }

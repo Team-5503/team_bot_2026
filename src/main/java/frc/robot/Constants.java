@@ -82,9 +82,9 @@ public final class Constants {
         public static final double kTolerance = 5;
 
         // set modes TODO: change after testing
-        public static final double kStow = -0.193115; 
-        public static final double kSlide = -0.193115;
-        public static final double kintake = -0.054688; 
+        public static final double kStow = .25; 
+        public static final double kSlide = .25;
+        public static final double kintake = 0; 
 
     }
     // for the bot's intake subsystem
@@ -117,8 +117,8 @@ public final class Constants {
         // tolerance to compare the shooter speed error with
         public static final double kTolerance = 20; // TODO: change if needed
         // set speeds
-        public static final double kIntake = .6;
-        public static final double kOutake = -.7;
+        public static final double kIntake = .5;
+        public static final double kOutake = -.5;
     }
     // For the bot's indexer subsystem
     public static class IndexConstants {
@@ -128,8 +128,8 @@ public final class Constants {
         // config TODO: change to accurate
         public static final boolean kInverted = false;
         
-        public static final int kStallLimit = 60;
-        public static final int kFreeLimit = 40;
+        public static final int kStallLimit = 80;
+        public static final int kFreeLimit = 60;
         public static final IdleMode kIdleMode = IdleMode.kCoast;
 
         // pid constants TODO: change to be hopefully accurate and pray it works
@@ -223,7 +223,7 @@ public final class Constants {
         public static final double kMaxRPM = 6000;
 
         // set speeds
-        public static final double ktower = -48;
+        public static final double ktower = -54;
         public static final double k2to3ft = -38;
         public static final double kWhyWouldYouUseThis = 10;
     }

@@ -39,11 +39,12 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LLShooter;
 import frc.robot.subsystems.shooter;
 
 public class RobotContainer {
-    private double MaxSpeed = (1.0/2.0) * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(0.125).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+    private double MaxSpeed = (1.0/4.0) * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
+    private double MaxAngularRate = RotationsPerSecond.of(0.02).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -72,6 +73,8 @@ public class RobotContainer {
     public final Intake intake = new Intake(); 
 
     public final Index index = new Index();
+
+    public final LLShooter limelight = new LLShooter();
 
     // public final Feeder feeder = new Feeder();
 
@@ -112,6 +115,15 @@ public class RobotContainer {
             "unclog",
             index.setRPM(IndexConstants.kUnclog)
             //.alongWith(feeder.setRPM(FeederConstants.kUnclog))
+        );
+        NamedCommands.registerCommand(
+            "autoaim",
+            shooter.setRPM(ShooterConstants.ktower)
+            .alongWith(drivetrain.applyRequest(() ->
+                drive.withVelocityX(0 * MaxSpeed) // Drive forward with negative Y (forward)
+                    .withVelocityY(0 * MaxSpeed) // Drive left with negative X (left)
+                    .withRotationalRate(LLShooter.getAimAssist() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+            ))
         );
 
 
@@ -178,11 +190,16 @@ public class RobotContainer {
         );
         tIntake.onFalse( 
             intake.stopMotors()
-            .andThen(intake.setPos(PivotConstants.kintake))
+            
         );
 
         tAim.onTrue(
             shooter.setRPM(ShooterConstants.ktower)
+            .alongWith(drivetrain.applyRequest(() ->
+                drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
+                    .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+                    .withRotationalRate(LLShooter.getAimAssist() - joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+            ))
             
             //.alongWith(feeder.setRPM(FeederConstants.kFeed))
         );

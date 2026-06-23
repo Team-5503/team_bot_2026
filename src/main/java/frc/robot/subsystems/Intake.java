@@ -31,6 +31,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.CANcoder;
@@ -136,12 +137,12 @@ public class Intake extends SubsystemBase {
 
     configs.MotorOutput.withInverted(InvertedValue.CounterClockwise_Positive);
     configs.MotorOutput.withNeutralMode(NeutralModeValue.Brake);
-    configs.Slot0.kP = 2.4; // An error of 1 rotation results in 2.4 V output
+    configs.Slot0.kP = 17; // An error of 1 rotation results in 2.4 V output
     configs.Slot0.kI = 0; // No output for integrated error
-    configs.Slot0.kD = 0.1; // A velocity of 1 rps results in 0.1 V output
+    configs.Slot0.kD = 1.5; // A velocity of 1 rps results in 0.1 V output
     configs.Slot0.withKS(0);
     configs.Slot0.withGravityType(GravityTypeValue.Arm_Cosine);
-    configs.Slot0.withKG(0);
+    configs.Slot0.withKG(0.4);
     // Peak output of 8 V
     configs.Voltage.withPeakForwardVoltage(Volts.of(8))
       .withPeakReverseVoltage(Volts.of(-8));
@@ -167,6 +168,7 @@ public class Intake extends SubsystemBase {
 
     var toApply = new CANcoderConfiguration();
     // toApply.MagnetSensor.withMagnetOffset(-0.04296875);
+    toApply.MagnetSensor.withSensorDirection(SensorDirectionValue.Clockwise_Positive);
     
 
     /* User can change the configs if they want, or leave it empty for factory-default */
@@ -200,7 +202,6 @@ public class Intake extends SubsystemBase {
 
   public void stop(){
     intake.stopMotor();
-    pivot.stopMotor();
   }
 
   private double getVelocity(){

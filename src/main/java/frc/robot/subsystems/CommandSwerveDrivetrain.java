@@ -215,7 +215,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 ),
                 new PPHolonomicDriveController(
                     // PID constants for translation
-                    new PIDConstants(.0001, 0, .5),
+                    new PIDConstants(6, 0, 0.016),
                     // PID constants for rotation
                     new PIDConstants(.0001, 0, 0)
                 ),
