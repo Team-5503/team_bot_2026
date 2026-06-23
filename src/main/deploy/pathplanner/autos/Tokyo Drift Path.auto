@@ -105,11 +105,35 @@
           "data": {
             "pathName": "Through Neutral Zone 3.0"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Under The Trench"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Turn Into Drift"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "THE DRIFT"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Drift Into Neutral Zone"
+          }
         }
       ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": "Autonomous Paths That Made Me Want To Bash My Head Into A Wall",
   "choreoAuto": false
 }

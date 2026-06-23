@@ -43,7 +43,7 @@
       ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": "The Boring Paths",
   "choreoAuto": false
 }
