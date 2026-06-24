@@ -11,9 +11,27 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "pivot to intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intake"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Through 24 2.0"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "pivot to stow"
           }
         },
         {
@@ -21,11 +39,29 @@
           "data": {
             "pathName": "Arch Bend 2.0"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "pivot to intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autoaim"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
         }
       ]
     }
   },
-  "resetOdom": false,
+  "resetOdom": true,
   "folder": "Autonomous Paths That Made Me Want To Bash My Head Into A Wall",
   "choreoAuto": false
 }

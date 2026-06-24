@@ -11,6 +11,18 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "pivot to intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intake"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Through 24"
@@ -21,11 +33,23 @@
           "data": {
             "pathName": "End Shoot"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autoaim"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
         }
       ]
     }
   },
-  "resetOdom": false,
+  "resetOdom": true,
   "folder": "Autonomous Paths That Made Me Want To Bash My Head Into A Wall",
   "choreoAuto": false
 }

@@ -5,15 +5,39 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "Center Move Back"
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "pivot to intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autoaim"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Move Forward"
           }
         }
       ]
     }
   },
-  "resetOdom": false,
+  "resetOdom": true,
   "folder": "The Boring Paths",
   "choreoAuto": false
 }

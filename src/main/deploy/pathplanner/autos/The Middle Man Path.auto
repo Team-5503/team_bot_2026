@@ -11,9 +11,39 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "pivot to intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autoaim"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 8.0
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Curve Back"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intake"
           }
         },
         {
@@ -23,15 +53,39 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "pivot to stow"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "End Shoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "pivot to intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autoaim"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
           }
         }
       ]
     }
   },
-  "resetOdom": false,
+  "resetOdom": true,
   "folder": "Autonomous Paths That Made Me Want To Bash My Head Into A Wall",
   "choreoAuto": false
 }

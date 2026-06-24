@@ -11,12 +11,30 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "pivot to intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intake"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Through The Neutral Zone 2.0"
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "pivot to stow"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Under The Trench"
@@ -26,6 +44,24 @@
           "type": "path",
           "data": {
             "pathName": "Turn Into Drift"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "pivot to intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autoaim"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
           }
         },
         {
@@ -41,9 +77,21 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "intake"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Through Neutral Zone 3.0"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "pivot to stow"
           }
         },
         {
@@ -56,6 +104,24 @@
           "type": "path",
           "data": {
             "pathName": "Turn Into Drift"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "pivot to intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autoaim"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
           }
         },
         {
@@ -71,9 +137,21 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "intake"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Through Neutral Zone 3.0"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "pivot to stow"
           }
         },
         {
@@ -86,6 +164,24 @@
           "type": "path",
           "data": {
             "pathName": "Turn Into Drift"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "pivot to intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autoaim"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
           }
         },
         {
@@ -101,9 +197,21 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "intake"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Through Neutral Zone 3.0"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "pivot to stow"
           }
         },
         {
@@ -116,6 +224,24 @@
           "type": "path",
           "data": {
             "pathName": "Turn Into Drift"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "pivot to intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autoaim"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
           }
         },
         {
@@ -133,7 +259,7 @@
       ]
     }
   },
-  "resetOdom": false,
+  "resetOdom": true,
   "folder": "Autonomous Paths That Made Me Want To Bash My Head Into A Wall",
   "choreoAuto": false
 }

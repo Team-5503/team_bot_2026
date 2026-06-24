@@ -9,6 +9,24 @@
           "data": {
             "pathName": "Angle"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "pivot to intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "autoaim"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shoot"
+          }
         }
       ]
     }
