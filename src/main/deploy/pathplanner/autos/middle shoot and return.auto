@@ -7,37 +7,7 @@
         {
           "type": "named",
           "data": {
-            "name": "aim from tower"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Center Move Back"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shoot"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 7.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "stop shooter"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Center Move Forward"
+            "name": "pivot to intake"
           }
         }
       ]

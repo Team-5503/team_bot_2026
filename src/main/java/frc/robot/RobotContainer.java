@@ -86,8 +86,15 @@ public class RobotContainer {
         // named commands for auto
         NamedCommands.registerCommand( 
         "intake", 
+        intake.setRPM(IntakeConstants.kIntake)
+        ); 
+        NamedCommands.registerCommand( 
+        "pivot to intake", 
         intake.setPos(PivotConstants.kintake)
-        .andThen(intake.setRPM(IntakeConstants.kIntake))
+        ); 
+        NamedCommands.registerCommand( 
+        "pivot to stow", 
+        intake.setPos(PivotConstants.kStow)
         ); 
         NamedCommands.registerCommand(
         "aim 2-3 ft",
@@ -144,8 +151,8 @@ public class RobotContainer {
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
-                drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+                drive.withVelocityX(joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
+                    .withVelocityY(joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
                     .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
         );
@@ -196,8 +203,8 @@ public class RobotContainer {
         tAim.onTrue(
             shooter.setRPM(ShooterConstants.ktower)
             .alongWith(drivetrain.applyRequest(() ->
-                drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+                botdrive.withVelocityX(joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
+                    .withVelocityY(joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
                     .withRotationalRate(LLShooter.getAimAssist() - joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             ))
             

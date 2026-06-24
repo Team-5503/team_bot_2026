@@ -23,7 +23,7 @@ public class LLShooter extends SubsystemBase {
   }
 
   public static double getAimAssist() {
-    double drivespeed = LimelightHelpers.getTX("")*0.01;
+    double drivespeed = LimelightHelpers.getTX("")*0.005;
         return -drivespeed;
   }
 

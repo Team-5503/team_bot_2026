@@ -223,7 +223,7 @@ public final class Constants {
         public static final double kMaxRPM = 6000;
 
         // set speeds
-        public static final double ktower = -54;
+        public static final double ktower = -56;
         public static final double k2to3ft = -38;
         public static final double kWhyWouldYouUseThis = 10;
     }
