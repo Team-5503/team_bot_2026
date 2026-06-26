@@ -84,7 +84,7 @@ public final class Constants {
         // set modes TODO: change after testing
         public static final double kStow = .25; 
         public static final double kSlide = .25;
-        public static final double kintake = 0; 
+        public static final double kintake = -0.01; 
 
     }
     // for the bot's intake subsystem
