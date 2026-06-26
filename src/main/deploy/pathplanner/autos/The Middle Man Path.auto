@@ -35,6 +35,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "stop shooter"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Curve Back"
@@ -80,6 +86,24 @@
           "type": "named",
           "data": {
             "name": "shoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 8.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stop shooter"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot Curve To Neutral Zone 4.0"
           }
         }
       ]

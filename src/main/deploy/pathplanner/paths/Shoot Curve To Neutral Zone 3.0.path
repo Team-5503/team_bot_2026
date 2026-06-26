@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.017744444444445,
+        "y": 4.015511111111111
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.442822222222223,
+        "y": 5.155611111111111
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.724311111111113,
+        "y": 7.075266666666667
+      },
+      "prevControl": {
+        "x": 7.526155113834963,
+        "y": 6.922838976454244
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 91.27303002005681
+  },
+  "reversed": false,
+  "folder": "The Drift Master",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -178.63607246839712
+  },
+  "useDefaultConstraints": true
+}
