@@ -43,7 +43,7 @@ import frc.robot.subsystems.LLShooter;
 import frc.robot.subsystems.shooter;
 
 public class RobotContainer {
-    private double MaxSpeed = (1.0/3.0) * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
+    private double MaxSpeed = (2.0/3.0) * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.02).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
     /* Setting up bindings for necessary control of the swerve drive platform */
@@ -103,7 +103,7 @@ public class RobotContainer {
         NamedCommands.registerCommand(
         "aim from tower",
         shooter.setRPM(ShooterConstants.ktower)
-        );
+        );  
         NamedCommands.registerCommand(
             "shoot",
             new RepeatCommand(
@@ -184,20 +184,21 @@ public class RobotContainer {
 
         // main triggers for the superstructure
 
-        final Trigger tIntake = joystick.leftBumper(); // sets the pivot to it's intake position and runs motor with a toggle
+        final Trigger tIntake = joystick.rightTrigger(.5); // sets the pivot to it's intake position and runs motor with a toggle
         final Trigger tAim = joystick.leftTrigger(.3); // aims the robot towards its target and sets the motor rpm depending on the distance from target (hold)
-        final Trigger tShoot = joystick.rightTrigger(.5); // runs the index system to feed to shooter
+        final Trigger tShoot = joystick.leftBumper(); // runs the index system to feed to shooter
         final Trigger tShift = joystick.rightBumper();
         final Trigger tUnclogIntake = joystick.a();
         final Trigger tUnclogIndex = joystick.b();
 
         // what the triggers do 
         tIntake.onTrue( 
-            intake.setRPM(IntakeConstants.kIntake)
-            //.andThen(intake.setPos(PivotConstants.kintake))
+            intake.setRPM(-IntakeConstants.kIntake)
+            .alongWith(index.setRPM(-IndexConstants.kIndex))
         );
         tIntake.onFalse( 
-            intake.stopMotors()
+            intake.setRPM(IntakeConstants.kIntake)
+            .alongWith(index.stopMotors())
             
         );
 
