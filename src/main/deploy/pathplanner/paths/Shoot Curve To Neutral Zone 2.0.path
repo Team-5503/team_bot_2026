@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.6595888888888888,
-        "y": 4.921744444444443
+        "x": 2.666944444444445,
+        "y": 3.752411111111111
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.0591111111111113,
-        "y": 4.960722222222222
+        "x": 2.491544444444445,
+        "y": 5.253055555555555
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.009808558558559,
-        "y": 5.035968468468468
+        "x": 7.724311111111113,
+        "y": 6.285966666666667
       },
       "prevControl": {
-        "x": 2.762493621028394,
-        "y": 5.072510521974678
+        "x": 7.6951007992192615,
+        "y": 6.5342543177473855
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 145.79290780469452
+    "rotation": 91.24536426676822
   },
   "reversed": false,
-  "folder": "Froggy",
+  "folder": "The Drift Master",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.5305013166739008
+    "rotation": -171.63411387596736
   },
   "useDefaultConstraints": true
 }

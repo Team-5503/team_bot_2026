@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.6595888888888888,
-        "y": 4.921744444444443
+        "x": 3.008,
+        "y": 5.0776555555555545
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.0591111111111113,
-        "y": 4.960722222222222
+        "x": 3.2451708245126287,
+        "y": 5.156712497059764
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.009808558558559,
-        "y": 5.035968468468468
+        "x": 7.695077777777778,
+        "y": 7.387088888888888
       },
       "prevControl": {
-        "x": 2.762493621028394,
-        "y": 5.072510521974678
+        "x": 7.724311111111113,
+        "y": 6.6659999999999995
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 145.79290780469452
+    "rotation": 90.0
   },
   "reversed": false,
-  "folder": "Froggy",
+  "folder": "The Middle Man",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.5305013166739008
+    "rotation": 146.00354085174936
   },
   "useDefaultConstraints": true
 }

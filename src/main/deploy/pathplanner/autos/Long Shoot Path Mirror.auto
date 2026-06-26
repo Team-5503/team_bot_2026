@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center Move Back"
+            "pathName": "Angle Mirror"
           }
         },
         {
@@ -43,7 +43,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center Move Forward"
+            "pathName": "Angle 2.0"
           }
         }
       ]
